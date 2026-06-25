@@ -1,0 +1,8 @@
+# gitleaks finding allowlist (fingerprint format: <commit/sha>:<path>:<rule>:<line>)
+#
+# ltm/bin/ltm.py lines 913/915 are a unit-test fixture for the LTM redaction
+# logic: the test feeds a fake "sk_live_..." string to assert it gets redacted.
+# It is not a real credential. (ltm/ is local agent tooling and is excluded from
+# the published repo via .gitignore.)
+229b6860f1f3b431c3ed5159133a23a53977e6fa:ltm/bin/ltm.py:stripe-access-token:913
+229b6860f1f3b431c3ed5159133a23a53977e6fa:ltm/bin/ltm.py:stripe-access-token:915

@@ -1,0 +1,62 @@
+# Checkov configuration for Billing Transfer Automation
+# https://www.checkov.io/2.Basics/CLI%20Command%20Reference.html
+
+framework:
+  - cloudformation
+
+directory:
+  - cdk.out
+
+compact: true
+quiet: true
+
+# Skip checks that are intentionally not addressed
+skip-check:
+  # Lambda VPC - Functions only call AWS public APIs (Organizations, Billing Conductor)
+  # Adding VPC would increase latency and cost without security benefit
+  - CKV_AWS_117
+
+  # Pipeline artifacts bucket - CDK Pipelines manages this internally
+  # Access logs bucket - Cannot log to itself (standard pattern)
+  - CKV_AWS_18
+  - CKV_AWS_21
+
+  # IAM wildcard resources - CDK Pipelines requires these for asset publishing
+  # The PipelineAssetsFileRole needs S3/ECR wildcards to publish assets.
+  # Also covers the Partner Central channel roles' inline permission policies:
+  # their organizations:/billingconductor: list/describe actions do not support
+  # resource-level permissions, so Resource: '*' is required (Requirement 7.4).
+  - CKV_AWS_111
+
+  # The following three checks fire only on synchronous, deploy-time custom-resource
+  # Lambdas that are managed by the CDK custom-resources.Provider framework (and the
+  # CDK BucketDeployment framework) - e.g. the Partner Central channel-roles provider
+  # framework functions. They are invoked only by CloudFormation during stack
+  # create/update/delete, never on the asynchronous data path, and their lifecycle is
+  # owned by the managed framework construct rather than this project's code.
+  #
+  # The project's own handlers already satisfy CKV_AWS_115 (reservedConcurrentExecutions)
+  # and CKV_AWS_173 (environmentEncryption with a rotating KMS key); these skips exist
+  # because the same checks also evaluate the framework-managed functions, which do not
+  # expose those options.
+  #
+  # CKV_AWS_116 (Lambda DLQ): a dead-letter queue only captures failed *asynchronous*
+  # invocations. CloudFormation custom-resource provider Lambdas are invoked
+  # synchronously by the provider framework, which has its own retry/timeout handling
+  # and surfaces failures directly to the stack operation (the handler fails closed),
+  # so a DLQ provides no benefit here.
+  - CKV_AWS_116
+
+  # CKV_AWS_115 (function-level concurrency limit): the CDK framework-managed provider
+  # functions do not expose a reservedConcurrentExecutions setting; concurrency for the
+  # deploy-time custom resources is naturally bounded by CloudFormation's serialized
+  # stack operations. The project's own provider handlers DO set this limit.
+  - CKV_AWS_115
+
+  # CKV_AWS_173 (Lambda environment-variable encryption): the project's own handlers set
+  # environmentEncryption with a customer-managed, rotating KMS key. This skip covers the
+  # CDK framework-managed provider/BucketDeployment functions, whose (non-sensitive)
+  # framework-set environment variables are encrypted at rest with the AWS-managed key by
+  # default and are not configurable for a customer-managed key without framework escape
+  # hatches.
+  - CKV_AWS_173

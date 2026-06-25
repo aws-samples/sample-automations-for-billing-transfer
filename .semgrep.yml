@@ -1,0 +1,14 @@
+rules:
+  - id: package-dependencies-check
+    pattern: '"dependencies": { ... }'
+    message: Suppressed - package-lock.json provides version locking
+    languages: [json]
+    severity: INFO
+    metadata:
+      category: best-practice
+      technology:
+        - npm
+        - nodejs
+    paths:
+      exclude:
+        - package.json

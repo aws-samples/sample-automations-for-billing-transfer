@@ -1,0 +1,12 @@
+# Ignore package.json for dependency version warnings
+# We use package-lock.json to lock exact versions
+package.json
+
+# Test code is not shipped runtime/attack surface. Semgrep findings here
+# (path handling, non-literal fs, regex construction in fixtures) are test
+# scaffolding, so exclude the test tree from scanning.
+test/
+
+# LTM is local agent tooling, excluded from the repo/seed entirely. Keep it out
+# of semgrep scans too.
+ltm/

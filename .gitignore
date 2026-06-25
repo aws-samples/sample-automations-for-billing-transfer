@@ -1,0 +1,86 @@
+# CDK
+cdk.out/
+# Per-account isolated synth dirs from `bt fleet deploy` (cdk.out.<profile>)
+cdk.out.*
+.cdk.staging/
+cdk.context.json
+*.js
+*.d.ts
+!jest.config.cjs
+node_modules/
+
+# IDE
+.idea/
+.vscode/settings.json
+*.swp
+*.swo
+*~
+# VS Code workspace files carry local, environment-specific settings
+# (e.g. AWS_PROFILE) and should not be committed.
+*.code-workspace
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build outputs
+dist/
+build/
+*.log
+
+# Test coverage
+coverage/
+.nyc_output/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# TypeScript
+*.tsbuildinfo
+
+# Local test events
+test-*.js
+test-*.json
+create-test-event.js
+response.json
+test-events/
+
+# Multi-profile deployment: the profile list carries environment-specific
+# account names, so it stays local. The `bt` CLI reads profiles from this file
+# by default (override with --profiles-file or $PAYER_PROFILES_FILE).
+payer-profiles.txt
+
+# Local/research documents
+*.local.md
+billing-transfers-*.md
+BILLING_TRANSFER_CUR_FINDINGS.md
+
+# Local scratch / working files (deploy run lists, logs, ad-hoc helper scripts).
+# These are session-local, often carry environment-specific account IDs, and
+# should never be committed. Committed dotfiles (.github, .kiro, .checkov.yaml,
+# etc.) are unaffected because these patterns are specific prefixes.
+.tmp-*
+.deploy-*
+.check-*
+
+.cur-invoke-out/*
+.invoke-cur.sh
+.pipeline-status.sh
+
+# bt CLI per-account fleet logs (e.g. seed-params writes .bt-logs/<command>/<profile>.log)
+.bt-logs/
+# --- ltm-power ---
+# Local long-term memory tooling and content. The LTM directory is agent
+# plumbing (not part of the sample) and is excluded from the repo entirely so
+# it never reaches the public GitHub seed. Its README/config/manifest plus the
+# memory content (which may contain account ids and work context) are all local.
+ltm/
+# --- /ltm-power ---
+
+# Repolinter: the OSPO ruleset is sourced separately and the repolinter
+# install/reports are local tooling — keep all of it out of the published repo.
+.repolinter/
+repolinter-report.json
+repolinter-report.xml

@@ -1,0 +1,189 @@
+Sample Automations for AWS Billing Transfer
+Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+
+This product includes software developed by Amazon Web Services (https://aws.amazon.com/).
+
+-------------------------------------------------------------------------------
+
+This project includes third-party software licensed under various open source licenses.
+The following is a summary of the key dependencies and their licenses:
+
+APACHE-2.0 LICENSED DEPENDENCIES
+---------------------------------
+
+This project uses the AWS Cloud Development Kit (AWS CDK) and AWS SDK for JavaScript,
+which are licensed under the Apache License 2.0.
+
+** AWS Cloud Development Kit (AWS CDK)
+Copyright 2018-2025 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+Licensed under the Apache License, Version 2.0
+https://github.com/aws/aws-cdk
+
+The AWS CDK includes its own NOTICE file with attributions for its dependencies.
+See node_modules/aws-cdk-lib/NOTICE for complete details.
+
+** AWS SDK for JavaScript v3
+Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+Licensed under the Apache License, Version 2.0
+https://github.com/aws/aws-sdk-js-v3
+
+This project uses the following AWS SDK clients:
+- @aws-sdk/client-billingconductor
+- @aws-sdk/client-organizations
+- @aws-sdk/client-cloudformation
+- @aws-sdk/client-iam
+- @aws-sdk/client-s3
+- @aws-sdk/client-sts
+- @aws-sdk/client-sso
+
+** AWS Lambda Powertools for TypeScript
+Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+Licensed under the Apache License, Version 2.0
+https://github.com/aws-powertools/powertools-lambda-typescript
+
+This project uses:
+- @aws-lambda-powertools/logger
+- @aws-lambda-powertools/metrics
+- @aws-lambda-powertools/tracer
+
+** CDK Nag
+Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+Licensed under the Apache License, Version 2.0
+https://github.com/cdklabs/cdk-nag
+
+** Constructs
+Copyright 2018-2025 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+Licensed under the Apache License, Version 2.0
+https://github.com/aws/constructs
+
+BSD-LICENSED DEPENDENCIES
+-------------------------
+
+This project includes software licensed under BSD licenses, which require
+preservation of copyright notices:
+
+** Sinon.JS and related packages (@sinonjs/*)
+Copyright (c) 2010-2024, Christian Johansen
+Licensed under the BSD-3-Clause License
+https://github.com/sinonjs/sinon
+
+** cls-hooked
+Copyright (c) 2015, Jeff Wen
+Licensed under the BSD-2-Clause License
+https://github.com/Jeff-Lewis/cls-hooked
+
+** emitter-listener
+Copyright (c) 2013, Forrest L Norvell
+Licensed under the BSD-2-Clause License
+https://github.com/othiym23/emitter-listener
+
+** shimmer
+Copyright (c) 2013, Forrest L Norvell
+Licensed under the BSD-2-Clause License
+https://github.com/othiym23/shimmer
+
+** esprima
+Copyright JS Foundation and other contributors
+Licensed under the BSD-2-Clause License
+https://github.com/jquery/esprima
+
+** Istanbul (istanbul-lib-*)
+Copyright 2012-2015 Yahoo! Inc.
+Licensed under the BSD-3-Clause License
+https://github.com/istanbuljs/istanbuljs
+
+** source-map and source-map-js
+Copyright (c) 2009-2011, Mozilla Foundation and contributors
+Licensed under the BSD-3-Clause License
+https://github.com/mozilla/source-map
+
+** sprintf-js
+Copyright (c) 2007-2014, Alexandru Marasteanu
+Licensed under the BSD-3-Clause License
+https://github.com/alexei/sprintf.js
+
+** tough-cookie
+Copyright (c) 2015, Salesforce.com, Inc.
+Licensed under the BSD-3-Clause License
+https://github.com/salesforce/tough-cookie
+
+** diff
+Copyright (c) 2009-2015, Kevin Decker
+Licensed under the BSD-3-Clause License
+https://github.com/kpdecker/jsdiff
+
+** table
+Copyright (c) 2018, Gajus Kuizinas
+Licensed under the BSD-3-Clause License
+https://github.com/gajus/table
+
+** fast-uri
+Copyright (c) 2015, Vincent Voyer
+Licensed under the BSD-3-Clause License
+https://github.com/fastify/fast-uri
+
+** gitlog
+Copyright (c) 2015, Dom Harrington
+Licensed under the BSD-3-Clause License
+https://github.com/domharrington/node-gitlog
+
+** makeerror
+Copyright (c) 2014, Naitik Shah
+Licensed under the BSD-3-Clause License
+https://github.com/daaku/nodejs-makeerror
+
+** tmpl
+Copyright (c) 2015, Daijiro Wachi
+Licensed under the BSD-3-Clause License
+https://github.com/daaku/nodejs-tmpl
+
+** tslib
+Copyright (c) Microsoft Corporation
+Licensed under the 0BSD License
+https://github.com/Microsoft/tslib
+
+CREATIVE COMMONS LICENSED DEPENDENCIES
+--------------------------------------
+
+** caniuse-lite
+Data from caniuse.com
+Licensed under CC-BY-4.0
+https://github.com/browserslist/caniuse-lite
+
+This data is provided by the Can I Use project and is used to determine
+browser compatibility information.
+
+MIT-LICENSED DEPENDENCIES
+-------------------------
+
+This project includes numerous dependencies licensed under the MIT License,
+which does not require attribution beyond preserving the license text.
+A complete list of MIT-licensed dependencies can be found by running:
+  npm list --all
+
+For a complete list of all dependencies and their licenses, run:
+  npx license-checker --summary
+
+-------------------------------------------------------------------------------
+
+FULL LICENSE TEXTS
+
+The full text of the Apache License 2.0 can be found at:
+https://www.apache.org/licenses/LICENSE-2.0
+
+The full text of the BSD-2-Clause License can be found at:
+https://opensource.org/licenses/BSD-2-Clause
+
+The full text of the BSD-3-Clause License can be found at:
+https://opensource.org/licenses/BSD-3-Clause
+
+The full text of the Creative Commons Attribution 4.0 International License can be found at:
+https://creativecommons.org/licenses/by/4.0/
+
+The full text of the MIT License can be found at:
+https://opensource.org/licenses/MIT
+
+-------------------------------------------------------------------------------
+
+For questions about licensing, please refer to the LICENSE file in this repository
+or contact the project maintainers.

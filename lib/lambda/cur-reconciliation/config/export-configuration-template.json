@@ -1,0 +1,41 @@
+{
+  "version": "1.0",
+  "myViewReportConfig": {
+    "enabled": true,
+    "timeUnit": "DAILY",
+    "format": "Parquet",
+    "compression": "Parquet",
+    "additionalSchemaElements": ["RESOURCES"],
+    "s3Bucket": "cur-reports-{ACCOUNT_ID}-{REGION}",
+    "s3Prefix": "my-view-reports",
+    "s3Region": "us-east-1",
+    "refreshClosedReports": true,
+    "reportVersioning": "OVERWRITE_REPORT",
+    "tags": {
+      "ViewType": "MyView",
+      "ManagedBy": "CURReconciliation"
+    },
+    "backfill": {
+      "enabled": false
+    }
+  },
+  "showbackViewReportConfig": {
+    "enabled": true,
+    "timeUnit": "DAILY",
+    "format": "Parquet",
+    "compression": "Parquet",
+    "additionalSchemaElements": [],
+    "s3Bucket": "cur-reports-{ACCOUNT_ID}-{REGION}",
+    "s3Prefix": "showback-view-reports",
+    "s3Region": "us-east-1",
+    "refreshClosedReports": true,
+    "reportVersioning": "OVERWRITE_REPORT",
+    "tags": {
+      "ViewType": "ShowbackView",
+      "ManagedBy": "CURReconciliation"
+    },
+    "backfill": {
+      "enabled": false
+    }
+  }
+}

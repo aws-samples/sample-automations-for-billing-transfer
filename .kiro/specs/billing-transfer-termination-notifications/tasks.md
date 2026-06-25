@@ -1,0 +1,106 @@
+# Implementation Plan
+
+- [x] 1. Create Termination Handler Lambda
+  - [x] 1.1 Create Lambda directory structure and entry point
+    - Create `lib/lambda/billing-transfer-termination-handler/index.ts`
+    - Define TypeScript interfaces for TerminationEvent and HandlerResponse
+    - Implement main handler function that routes to termination processing
+    - _Requirements: 1.1, 6.3_
+  - [x] 1.2 Implement SNS notification publishing
+    - Create `publishTerminationNotification()` function
+    - Use SNS client to publish to topic from environment variable
+    - Include message attributes for filtering
+    - Handle SNS publish errors gracefully (catch, log, don't throw)
+    - _Requirements: 1.1, 3.3, 3.4, 3.5_
+  - [x] 1.3 Implement email message formatting
+    - Create `formatEmailBody()` function for human-readable email content
+    - Create `formatEmailSubject()` function with pattern "Billing Transfer Terminated: Account {accountId}"
+    - Format dates in ISO 8601 format
+    - Include all required fields: transferId, accountIds, dates, status
+    - _Requirements: 1.3, 1.4, 1.5, 4.1, 4.3, 4.4, 4.5_
+  - [ ]* 1.4 Write property tests for message formatting
+    - **Property 7: Email subject format**
+    - **Property 8: Email body contains account IDs**
+    - **Property 9: Email body contains transfer ID**
+    - **Validates: Requirements 4.1, 4.3, 4.5**
+  - [ ]* 1.5 Write property tests for SNS publishing
+    - **Property 1: SNS publish called for all termination events**
+    - **Property 5: SNS failures are caught**
+    - **Property 6: Success logging includes message ID**
+    - **Validates: Requirements 1.1, 3.4, 3.5**
+
+- [x] 2. Create Termination Stack CDK Infrastructure
+  - [x] 2.1 Create new CDK stack file
+    - Create `lib/stacks/billing-transfer-termination-stack.ts`
+    - Define `BillingTransferTerminationStackProps` interface with notificationEmails parameter
+    - Export `BillingTransferTerminationStack` class
+    - _Requirements: 2.1, 2.2, 5.1_
+  - [x] 2.2 Implement SNS Topic and Email Subscriptions
+    - Create SNS topic with display name and topic name
+    - Iterate over notificationEmails array to create subscriptions
+    - Use EMAIL protocol for subscriptions
+    - Handle empty email list (create topic without subscriptions)
+    - _Requirements: 2.1, 2.2, 2.4, 2.5_
+  - [x] 2.3 Implement Lambda function resource
+    - Create NodejsFunction with ARM64 architecture
+    - Configure bundling with externalModules: []
+    - Set TERMINATION_TOPIC_ARN environment variable
+    - Create DLQ for failed invocations
+    - Grant SNS publish permission to Lambda
+    - _Requirements: 3.1, 3.2_
+  - [x] 2.4 Implement EventBridge rule for terminated events
+    - Create rule with pattern for ResponsibilityTransferTerminated only
+    - Add Lambda as target with retry configuration
+    - Configure maxEventAge and retryAttempts
+    - _Requirements: 1.1_
+  - [x] 2.5 Add CDK Nag suppressions and outputs
+    - Add suppressions for IAM5 (SNS wildcard), IAM4 (basic execution role), L1 (runtime)
+    - Create outputs for topic ARN, Lambda ARN, DLQ URL
+    - Apply resource tags
+    - _Requirements: 3.1_
+  - [ ]* 2.6 Write CDK synthesis tests
+    - **Property 4: Multiple email subscriptions created**
+    - Test stack creates SNS topic
+    - Test stack creates Lambda with correct permissions
+    - Test stack creates EventBridge rule for terminated events only
+    - **Validates: Requirements 2.4**
+
+- [x] 3. Checkpoint - Ensure all tests pass
+  - Ensure all tests pass, ask the user if questions arise.
+
+- [x] 4. Update Existing Event Handler Stack
+  - [x] 4.1 Modify EventBridge rule to only listen for accepted events
+    - Update eventPattern in `billing-group-event-handler-stack.ts`
+    - Change eventName filter from array with both events to only `ResponsibilityTransferAccepted`
+    - _Requirements: 6.1, 6.2_
+  - [ ]* 4.2 Write test to verify EventBridge rule change
+    - Test that synthesized template only includes ResponsibilityTransferAccepted
+    - **Validates: Requirements 6.1, 6.2**
+
+- [x] 5. Update Pipeline to Deploy New Stack
+  - [x] 5.1 Add Termination Stack to ApplicationStage
+    - Import BillingTransferTerminationStack in pipeline-stack.ts
+    - Instantiate stack in ApplicationStage constructor
+    - Configure notificationEmails parameter (can be empty initially)
+    - Apply consistent tags
+    - _Requirements: 2.1, 5.4_
+
+- [x] 6. Checkpoint - Ensure all tests pass
+  - Ensure all tests pass, ask the user if questions arise.
+
+- [x] 7. Integration Testing
+  - [x] 7.1 Deploy and test end-to-end flow
+    - Deploy stack via pipeline
+    - Verify SNS topic created
+    - Verify Lambda has correct permissions
+    - Verify EventBridge rule triggers on terminated events
+    - _Requirements: 1.1, 2.1, 3.1_
+  - [x] 7.2 Test with real termination event
+    - Trigger a ResponsibilityTransferTerminated event
+    - Verify Lambda invoked
+    - Verify SNS message published
+    - Verify email received (if subscribed)
+    - _Requirements: 1.1, 1.2_
+
+- [x] 8. Final Checkpoint - Ensure all tests pass
+  - Ensure all tests pass, ask the user if questions arise.
