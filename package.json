@@ -65,7 +65,7 @@
     "aws-cdk": "^2.174.0",
     "aws-sdk-client-mock": "^4.1.0",
     "cdk-nag": "^2.38.2",
-    "esbuild": "^0.28.0",
+    "esbuild": "^0.28.1",
     "fast-check": "^4.3.0",
     "jest": "^30.4.2",
     "ts-jest": "^29.4.11",
